@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="refresh" content="30">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>GBEvents</title>
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-green.css">
+	<style>
+	button.accordion {
+		transition: 0.4s;
+		cursor: pointer;
+		width: 100%;
+		padding: 18px;
+		text-align: left;
+	    border: none;
+	    outline: none;
+	}
+	div.panel {
+		display: none;
+	}
+	div.panel.show {
+	    display: block;
+	}
+	button.accordion:after {
+	    content: '\02795'; /* Unicode character for "plus" sign (+) */
+	    font-size: 13px;
+	    color: #777;
+	    float: right;
+	    margin-left: 5px;
+	}
+
+	button.accordion.active:after {
+	    content: "\2796"; /* Unicode character for "minus" sign (-) */
+	}
+	</style>
+	<script type="text/javascript">
+	function setupMenu() {
+		var acc = document.getElementsByClassName("accordion");
+		var i;
+
+		for (i = 0; i < acc.length; i++) {
+		    acc[i].onclick = function(){
+		        this.classList.toggle("active");
+		        this.nextElementSibling.classList.toggle("show");
+		    }
+		}
+	}
+	</script>
+</head>
+<body onload="setupMenu()">
+<div class="w3-card-4">
+<div class="w3-container w3-theme w3-card-2">
+<h1>GBEvents</h1>
+</div>
+<div class="w3-container w3-text-theme">
+<% eventsCount = @messages.count %>
+<% @messages.reverse.each_with_index do |event, index| %>	
+	<div class="w3-card-4 w3-theme-l4">
+		<button class="accordion active w3-btn w3-border w3-border-light-green w3-theme-d1">Bucket <%= eventsCount-index %></button>
+		<div class="panel show">
+			<pre> <%= JSON.pretty_generate(event) %> </pre>
+		</div>
+	</div>	
+<% end %>
+</div>
+</div>
+</body>
+</html>
