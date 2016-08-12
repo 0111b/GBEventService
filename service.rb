@@ -11,7 +11,7 @@ class EventService < Sinatra::Base
   configure do
     set :environment, :production
     set :bind, '0.0.0.0'
-    set :port, 4567
+    # set :port, 4567
     set :server, "thin"
   end
   
