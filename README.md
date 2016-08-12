@@ -6,8 +6,8 @@ To run service:
 
 Endpoints:
 
-- GET  http://localhost:4567 - list of the accepted events
-- POST http://localhost:4567 - simulated endpoint
+- GET  / - list of the accepted events
+- POST / - simulated endpoint
 
 Logs:
 
