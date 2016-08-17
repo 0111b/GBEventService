@@ -13,6 +13,7 @@ class EventService < Sinatra::Base
     set :bind, '0.0.0.0'
     # set :port, 4567
     set :server, "thin"
+    set :lock, true
   end
   
   historyName = "history.json"
