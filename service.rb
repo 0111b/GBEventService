@@ -18,6 +18,34 @@ class EventService < Sinatra::Base
   
   historyName = "history.json"
 
+  post '/createOrUpdateDevice' do
+    content_type :json
+    response =  {
+      "status" => {
+        "code" => 0,
+        "message" => "ok",
+      },
+      "fcmDeviceData" => {
+        "userUuid" => "testUserUuid",
+      },
+    }
+    JSON.pretty_generate response
+  end
+  
+  delete "/deleteDevice" do
+    content_type :json
+    response =  {
+      "status" => {
+        "code" => 0,
+        "message" => "ok",
+      },
+      "fcmDeviceData" => {
+        "userUuid" => "testUserUuid",
+      },
+    }
+    JSON.pretty_generate response    
+  end
+
   get '/' do    
     @messages = fetchMessages historyName     
     erb @messages.length > 0 ? :index : :empty
