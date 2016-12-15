@@ -4,12 +4,12 @@ To run service:
 
 > bundle exec ruby service.rb
 
-Endpoints:
+###Endpoints:
 
 - GET  / - list of the accepted events
 - POST / - simulated endpoint
 
-Logs:
+###Logs:
 
 - history.json - valid events
 - error.log - errors
