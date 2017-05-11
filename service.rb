@@ -16,6 +16,12 @@ class EventService < Sinatra::Base
     set :lock, true
   end
   
+  helpers do
+    def gb_url
+      "https://app-qa.gwynniebee.com:4443/v1/postEvent.json" + request.fullpath
+    end
+  end
+  
   historyName = "history.json"
 
   post '/createOrUpdateDevice' do
@@ -69,12 +75,7 @@ class EventService < Sinatra::Base
     f.write(JSON.generate(m))
     f.close
       
-    
-    response =  {
-      "status" => 0,
-      "message" => "ok"
-    }
-    JSON.pretty_generate response
+    redirect gb_url, 307
   end
   
   def logError(message)
