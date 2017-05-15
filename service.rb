@@ -7,6 +7,9 @@ require 'erb'
 require 'json'
 require 'date'
 
+require 'rest-client'
+GB = RestClient::Resource.new "https://app-qa.gwynniebee.com:4443"
+
 class EventService < Sinatra::Base  
   configure do
     set :environment, :production
@@ -14,12 +17,6 @@ class EventService < Sinatra::Base
     # set :port, 4567
     set :server, "thin"
     set :lock, true
-  end
-  
-  helpers do
-    def gb_url
-      "https://app-qa.gwynniebee.com:4443/v1/postEvent.json" + request.fullpath
-    end
   end
   
   historyName = "history.json"
@@ -59,8 +56,9 @@ class EventService < Sinatra::Base
 
   post '/' do  
     content_type :json
+    data = request.body.read
     begin
-      json = JSON.parse request.body.read
+      json = JSON.parse data
     rescue Exception => e
       logError e.message
       response =  {
@@ -75,7 +73,13 @@ class EventService < Sinatra::Base
     f.write(JSON.generate(m))
     f.close
       
-    redirect gb_url, 307
+    request_method = 'POST'.downcase.to_sym
+    request_headers = {
+          :accept => "application/json", 
+          :content_type => "application/json",
+      }
+    proxy_response = GB['/v1/postEvent.json'].send(request_method, data, request_headers)
+    proxy_response    
   end
   
   def logError(message)
